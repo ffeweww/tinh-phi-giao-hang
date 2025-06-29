@@ -1,0 +1,141 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Minh bạch chi phí giao hàng</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #e6f7f9;
+      color: #333;
+      margin: 0;
+    }
+    header {
+      background: #0097a7;
+      color: white;
+      text-align: center;
+      padding: 20px 0;
+    }
+    main {
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+    .description {
+      text-align: center;
+      color: #666;
+      margin-bottom: 30px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #0097a7;
+      color: white;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #007b8a;
+    }
+    #result {
+      background: #f1f8ff;
+      margin-top: 30px;
+      padding: 15px;
+      border-left: 5px solid #0097a7;
+      border-radius: 5px;
+    }
+    footer {
+      text-align: center;
+      font-size: 13px;
+      color: #888;
+      margin: 40px 0 20px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Hệ thống tính phí giao hàng</h1>
+  </header>
+
+  <main>
+    <p class="description">Minh bạch - Rõ ràng - Chính xác</p>
+
+    <label>Điểm giao hàng:</label>
+    <input type="text" id="destination" value="685 Xô Viết Nghệ Tĩnh, P.26, Bình Thạnh">
+
+    <label>Tên khách hàng:</label>
+    <input type="text" id="customerName" value="Ngọc Anh">
+
+    <label>Trạng thái:</label>
+    <select id="status">
+      <option>Đang xử lý</option>
+      <option>Đã giao</option>
+      <option>Đã hủy</option>
+    </select>
+
+    <label>Khoảng cách (km):</label>
+    <input type="number" id="distance" value="1.7" step="0.1">
+
+    <label>Khối lượng (kg):</label>
+    <input type="number" id="weight" value="10" step="0.1">
+
+    <button onclick="calculateFee()">Tính phí</button>
+
+    <div id="result"></div>
+  </main>
+
+  <footer>
+    &copy; 2025 Hệ thống minh bạch chi phí giao hàng
+  </footer>
+
+  <script>
+    function calculateFee() {
+      const customer = document.getElementById("customerName").value.trim();
+      const to = document.getElementById("destination").value.trim();
+      const from = "246 Đinh Bộ Lĩnh, P.26, Bình Thạnh";
+      const status = document.getElementById("status").value;
+      const distance = parseFloat(document.getElementById("distance").value);
+      const weight = parseFloat(document.getElementById("weight").value);
+
+      if (isNaN(distance) || isNaN(weight) || distance <= 0 || weight <= 0) {
+        document.getElementById("result").innerHTML = "<span style='color: red;'>Vui lòng nhập đúng thông tin khoảng cách và khối lượng.</span>";
+        return;
+      }
+
+      const fee = distance * 10000 + weight * 3000;
+
+      document.getElementById("result").innerHTML = `
+        <strong>Khách hàng:</strong> ${customer}<br>
+        <strong>Điểm lấy hàng:</strong> ${from}<br>
+        <strong>Điểm giao hàng:</strong> ${to}<br>
+        <strong>Trạng thái:</strong> ${status}<br>
+        <strong>Phí giao hàng:</strong> ${fee.toLocaleString()} VND
+      `;
+    }
+  </script>
+
+</body>
+</html>
